@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.LinkedList;
 
 public class TrainConsistManagementApp {
 
@@ -15,9 +16,12 @@ public class TrainConsistManagementApp {
 
         // ===== UC3 =====
         trackUniqueBogies();
+
+        // ===== UC4 =====
+        maintainOrderedConsist();
     }
 
-    // ===== UC1: Initialize Train and Display Consist Summary =====
+    // ===== UC1 =====
     public static void initializeTrain() {
 
         System.out.println("=================================");
@@ -33,24 +37,21 @@ public class TrainConsistManagementApp {
         System.out.println("\nSystem ready for operations...\n");
     }
 
-    // ===== UC2: Room Initialization (OOP Concept) =====
+    // ===== UC2 =====
     public static void roomInitialization() {
 
         System.out.println("=================================");
         System.out.println("Hotel Room Initialization");
         System.out.println("=================================\n");
 
-        // Create room objects
         Room single = new SingleRoom();
         Room doubleroom = new DoubleRoom();
         Room suite = new SuiteRoom();
 
-        // Static availability
         int singleAvailable = 5;
         int doubleAvailable = 3;
         int suiteAvailable = 2;
 
-        // Display details
         System.out.println("Single Room:");
         single.displayRoomDetails();
         System.out.println("Available: " + singleAvailable + "\n");
@@ -64,17 +65,15 @@ public class TrainConsistManagementApp {
         System.out.println("Available: " + suiteAvailable + "\n");
     }
 
-    // ===== UC3: Track Unique Bogie IDs =====
+    // ===== UC3 =====
     public static void trackUniqueBogies() {
 
         System.out.println("=================================");
         System.out.println("UC3 - Track Unique Bogie IDs");
         System.out.println("=================================\n");
 
-        // HashSet stores only unique values
         Set<String> bogies = new HashSet<>();
 
-        // Add bogie IDs (with duplicates)
         bogies.add("B101");
         bogies.add("B102");
         bogies.add("B103");
@@ -83,7 +82,6 @@ public class TrainConsistManagementApp {
         bogies.add("B101"); // duplicate
         bogies.add("B102"); // duplicate
 
-        // Display result
         System.out.println("Bogie IDs After Insertion:");
         System.out.println(bogies);
 
@@ -91,6 +89,38 @@ public class TrainConsistManagementApp {
         System.out.println("Duplicates are automatically ignored by HashSet");
 
         System.out.println("\nUC3 uniqueness validation completed...\n");
+    }
+
+    // ===== UC4 =====
+    public static void maintainOrderedConsist() {
+
+        System.out.println("=================================");
+        System.out.println("UC4 - Maintain Ordered Bogie Consist");
+        System.out.println("=================================\n");
+
+        LinkedList<String> trainConsist = new LinkedList<>();
+
+        trainConsist.add("Engine");
+        trainConsist.add("Sleeper");
+        trainConsist.add("AC");
+        trainConsist.add("Cargo");
+        trainConsist.add("Guard");
+
+        System.out.println("Initial Train Consist:");
+        System.out.println(trainConsist + "\n");
+
+        trainConsist.add(2, "Pantry Car");
+
+        System.out.println("After inserting 'Pantry Car' at position 2:");
+        System.out.println(trainConsist + "\n");
+
+        trainConsist.removeFirst();
+        trainConsist.removeLast();
+
+        System.out.println("After removing first and last bogie:");
+        System.out.println(trainConsist + "\n");
+
+        System.out.println("UC4 ordered consist operations completed...\n");
     }
 }
 
