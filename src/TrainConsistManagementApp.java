@@ -26,6 +26,8 @@ public class TrainConsistManagementApp {
     // ===== UC1 =====
     public static void initializeTrain() {
 
+
+
         System.out.println("=================================");
         System.out.println("=== Train Consist Management App ===");
         System.out.println("=================================\n");
