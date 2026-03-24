@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TrainConsistManagementApp {
 
@@ -10,9 +12,12 @@ public class TrainConsistManagementApp {
 
         // ===== UC2 =====
         roomInitialization();
+
+        // ===== UC3 =====
+        trackUniqueBogies();
     }
 
-    // ===== UC1 =====
+    // ===== UC1: Initialize Train and Display Consist Summary =====
     public static void initializeTrain() {
 
         System.out.println("=================================");
@@ -28,10 +33,12 @@ public class TrainConsistManagementApp {
         System.out.println("\nSystem ready for operations...\n");
     }
 
-    // ===== UC2 =====
+    // ===== UC2: Room Initialization (OOP Concept) =====
     public static void roomInitialization() {
 
-        System.out.println("Hotel Room Initialization\n");
+        System.out.println("=================================");
+        System.out.println("Hotel Room Initialization");
+        System.out.println("=================================\n");
 
         // Create room objects
         Room single = new SingleRoom();
@@ -55,6 +62,35 @@ public class TrainConsistManagementApp {
         System.out.println("Suite Room:");
         suite.displayRoomDetails();
         System.out.println("Available: " + suiteAvailable + "\n");
+    }
+
+    // ===== UC3: Track Unique Bogie IDs =====
+    public static void trackUniqueBogies() {
+
+        System.out.println("=================================");
+        System.out.println("UC3 - Track Unique Bogie IDs");
+        System.out.println("=================================\n");
+
+        // HashSet stores only unique values
+        Set<String> bogies = new HashSet<>();
+
+        // Add bogie IDs (with duplicates)
+        bogies.add("B101");
+        bogies.add("B102");
+        bogies.add("B103");
+        bogies.add("B104");
+
+        bogies.add("B101"); // duplicate
+        bogies.add("B102"); // duplicate
+
+        // Display result
+        System.out.println("Bogie IDs After Insertion:");
+        System.out.println(bogies);
+
+        System.out.println("\nNote:");
+        System.out.println("Duplicates are automatically ignored by HashSet");
+
+        System.out.println("\nUC3 uniqueness validation completed...\n");
     }
 }
 
