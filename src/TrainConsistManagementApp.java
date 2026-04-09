@@ -34,6 +34,9 @@ public class TrainConsistManagementApp {
 
         // ===== UC10 =====
         countTotalSeats();
+
+        // ===== UC11 =====
+        validateTrainAndCargo();
     }
 
     // ===== UC1 =====
@@ -300,6 +303,52 @@ public class TrainConsistManagementApp {
         System.out.println("\nTotal Seating Capacity: " + totalSeats);
 
         System.out.println("\nUC10 completed...\n");
+    }
+
+    // ===== UC11 =====
+    public static void validateTrainAndCargo() {
+
+        System.out.println("======================================");
+        System.out.println("UC11 - Validate Train ID & Cargo Code");
+        System.out.println("======================================\n");
+
+        // Sample Inputs (you can change for testing)
+        String trainId = "TRN-1234";
+        String cargoCode = "PET-AB";
+
+        // REGEX PATTERNS
+        String trainPattern = "TRN-\\d{4}";
+        String cargoPattern = "PET-[A-Z]{2}";
+
+        // COMPILE PATTERNS
+        java.util.regex.Pattern trainRegex = java.util.regex.Pattern.compile(trainPattern);
+        java.util.regex.Pattern cargoRegex = java.util.regex.Pattern.compile(cargoPattern);
+
+        // CREATE MATCHERS
+        java.util.regex.Matcher trainMatcher = trainRegex.matcher(trainId);
+        java.util.regex.Matcher cargoMatcher = cargoRegex.matcher(cargoCode);
+
+        // VALIDATE
+        boolean isTrainValid = trainMatcher.matches();
+        boolean isCargoValid = cargoMatcher.matches();
+
+        // DISPLAY RESULTS
+        System.out.println("Train ID: " + trainId);
+        System.out.println("Cargo Code: " + cargoCode);
+
+        if (isTrainValid) {
+            System.out.println("Train ID is VALID");
+        } else {
+            System.out.println("Train ID is INVALID");
+        }
+
+        if (isCargoValid) {
+            System.out.println("Cargo Code is VALID");
+        } else {
+            System.out.println("Cargo Code is INVALID");
+        }
+
+        System.out.println("\nUC11 validation completed...\n");
     }
 }
 
