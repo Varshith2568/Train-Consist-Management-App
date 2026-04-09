@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
 
@@ -24,12 +25,16 @@ public class TrainConsistManagementApp {
 
         // ===== UC7 =====
         sortBogiesByCapacity();
+
+        // ===== UC8 =====
+        filterBogiesUsingStreams();
+
+        // ===== UC9 =====
+        groupBogiesByType();
     }
 
     // ===== UC1 =====
     public static void initializeTrain() {
-
-
 
         System.out.println("=================================");
         System.out.println("=== Train Consist Management App ===");
@@ -55,21 +60,16 @@ public class TrainConsistManagementApp {
         Room doubleroom = new DoubleRoom();
         Room suite = new SuiteRoom();
 
-        int singleAvailable = 5;
-        int doubleAvailable = 3;
-        int suiteAvailable = 2;
-
         System.out.println("Single Room:");
         single.displayRoomDetails();
-        System.out.println("Available: " + singleAvailable + "\n");
 
-        System.out.println("Double Room:");
+        System.out.println("\nDouble Room:");
         doubleroom.displayRoomDetails();
-        System.out.println("Available: " + doubleAvailable + "\n");
 
-        System.out.println("Suite Room:");
+        System.out.println("\nSuite Room:");
         suite.displayRoomDetails();
-        System.out.println("Available: " + suiteAvailable + "\n");
+
+        System.out.println("\nUC2 completed...\n");
     }
 
     // ===== UC3 =====
@@ -85,17 +85,11 @@ public class TrainConsistManagementApp {
         bogies.add("B102");
         bogies.add("B103");
         bogies.add("B104");
+        bogies.add("B101"); // duplicate
 
-        bogies.add("B101");
-        bogies.add("B102");
-
-        System.out.println("Bogie IDs After Insertion:");
         System.out.println(bogies);
 
-        System.out.println("\nNote:");
-        System.out.println("Duplicates are automatically ignored by HashSet");
-
-        System.out.println("\nUC3 uniqueness validation completed...\n");
+        System.out.println("\nUC3 completed...\n");
     }
 
     // ===== UC4 =====
@@ -105,36 +99,26 @@ public class TrainConsistManagementApp {
         System.out.println("UC4 - Maintain Ordered Bogie Consist");
         System.out.println("=================================\n");
 
-        LinkedList<String> trainConsist = new LinkedList<>();
+        LinkedList<String> train = new LinkedList<>();
 
-        trainConsist.add("Engine");
-        trainConsist.add("Sleeper");
-        trainConsist.add("AC");
-        trainConsist.add("Cargo");
-        trainConsist.add("Guard");
+        train.add("Engine");
+        train.add("Sleeper");
+        train.add("AC");
+        train.add("Cargo");
+        train.add("Guard");
 
-        System.out.println("Initial Train Consist:");
-        System.out.println(trainConsist + "\n");
+        train.add(2, "Pantry");
 
-        trainConsist.add(2, "Pantry Car");
+        System.out.println(train);
 
-        System.out.println("After inserting 'Pantry Car' at position 2:");
-        System.out.println(trainConsist + "\n");
-
-        trainConsist.removeFirst();
-        trainConsist.removeLast();
-
-        System.out.println("After removing first and last bogie:");
-        System.out.println(trainConsist + "\n");
-
-        System.out.println("UC4 ordered consist operations completed...\n");
+        System.out.println("\nUC4 completed...\n");
     }
 
     // ===== UC5 =====
     public static void preserveInsertionOrder() {
 
         System.out.println("=================================");
-        System.out.println("UC5 - Preserve Insertion Order of Bogies");
+        System.out.println("UC5 - Preserve Order");
         System.out.println("=================================\n");
 
         Set<String> formation = new LinkedHashSet<>();
@@ -143,52 +127,40 @@ public class TrainConsistManagementApp {
         formation.add("Sleeper");
         formation.add("Cargo");
         formation.add("Guard");
+        formation.add("Sleeper");
 
-        formation.add("Sleeper"); // duplicate
-
-        System.out.println("Final Train Formation:");
         System.out.println(formation);
 
-        System.out.println("\nNote:");
-        System.out.println("LinkedHashSet preserves insertion order and removes duplicates automatically.");
-
-        System.out.println("\nUC5 formation setup completed...\n");
+        System.out.println("\nUC5 completed...\n");
     }
 
     // ===== UC6 =====
     public static void mapBogieCapacity() {
 
         System.out.println("=================================");
-        System.out.println("UC6 - Map Bogie to Capacity (HashMap)");
+        System.out.println("UC6 - Map Capacity");
         System.out.println("=================================\n");
 
-        // Create HashMap
-        Map<String, Integer> capacityMap = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
 
-        // Insert values
-        capacityMap.put("First Class", 24);
-        capacityMap.put("Cargo", 120);
-        capacityMap.put("Sleeper", 72);
-        capacityMap.put("AC Chair", 56);
+        map.put("Sleeper", 72);
+        map.put("AC Chair", 56);
+        map.put("First Class", 24);
 
-        System.out.println("Bogie Capacity Details:");
-
-        // Iterate using entrySet()
-        for (Map.Entry<String, Integer> entry : capacityMap.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        for (Map.Entry<String, Integer> e : map.entrySet()) {
+            System.out.println(e.getKey() + " -> " + e.getValue());
         }
 
-        System.out.println("\nUC6 bogie-capacity mapping completed...\n");
+        System.out.println("\nUC6 completed...\n");
     }
 
     // ===== UC7 =====
     public static void sortBogiesByCapacity() {
 
-        System.out.println("======================================");
-        System.out.println("UC7 - Sort Bogies by Capacity (Comparator)");
-        System.out.println("======================================\n");
+        System.out.println("=================================");
+        System.out.println("UC7 - Sort Bogies");
+        System.out.println("=================================\n");
 
-        // Inner Bogie class
         class Bogie {
             String name;
             int capacity;
@@ -199,71 +171,121 @@ public class TrainConsistManagementApp {
             }
         }
 
-        // Create list
-        List<Bogie> bogies = new ArrayList<>();
+        List<Bogie> list = new ArrayList<>();
 
-        // Add bogies
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("General", 90));
+        list.add(new Bogie("Sleeper", 72));
+        list.add(new Bogie("AC Chair", 56));
+        list.add(new Bogie("First Class", 24));
 
-        // BEFORE SORTING
-        System.out.println("Before Sorting:");
-        for (Bogie b : bogies) {
+        list.sort(Comparator.comparingInt(b -> b.capacity));
+
+        for (Bogie b : list) {
             System.out.println(b.name + " -> " + b.capacity);
         }
 
-        // SORT USING COMPARATOR
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
+        System.out.println("\nUC7 completed...\n");
+    }
 
-        // AFTER SORTING
-        System.out.println("\nAfter Sorting by Capacity:");
-        for (Bogie b : bogies) {
+    // ===== UC8 =====
+    public static void filterBogiesUsingStreams() {
+
+        System.out.println("=================================");
+        System.out.println("UC8 - Filter Bogies");
+        System.out.println("=================================\n");
+
+        class Bogie {
+            String name;
+            int capacity;
+
+            Bogie(String name, int capacity) {
+                this.name = name;
+                this.capacity = capacity;
+            }
+        }
+
+        List<Bogie> list = new ArrayList<>();
+
+        list.add(new Bogie("Sleeper", 72));
+        list.add(new Bogie("AC Chair", 56));
+        list.add(new Bogie("First Class", 24));
+        list.add(new Bogie("General", 90));
+
+        List<Bogie> filtered = list.stream()
+                .filter(b -> b.capacity > 60)
+                .toList();
+
+        for (Bogie b : filtered) {
             System.out.println(b.name + " -> " + b.capacity);
         }
 
-        System.out.println("\nUC7 sorting completed...\n");
+        System.out.println("\nUC8 completed...\n");
+    }
+
+    // ===== UC9 =====
+    public static void groupBogiesByType() {
+
+        System.out.println("=================================");
+        System.out.println("UC9 - Group Bogies");
+        System.out.println("=================================\n");
+
+        class Bogie {
+            String name;
+            int capacity;
+
+            Bogie(String name, int capacity) {
+                this.name = name;
+                this.capacity = capacity;
+            }
+        }
+
+        List<Bogie> list = new ArrayList<>();
+
+        list.add(new Bogie("Sleeper", 72));
+        list.add(new Bogie("AC Chair", 56));
+        list.add(new Bogie("Sleeper", 72));
+        list.add(new Bogie("First Class", 24));
+
+        Map<String, List<Bogie>> grouped =
+                list.stream().collect(Collectors.groupingBy(b -> b.name));
+
+        for (String key : grouped.keySet()) {
+            System.out.println(key + ":");
+            for (Bogie b : grouped.get(key)) {
+                System.out.println("  " + b.capacity);
+            }
+        }
+
+        System.out.println("\nUC9 completed...\n");
     }
 }
 
-// ===== ABSTRACT CLASS =====
+// ===== ROOM CLASSES =====
 abstract class Room {
+    protected int beds;
+    protected int size;
+    protected double price;
 
-    protected int numberOfBeds;
-    protected int squareFeet;
-    protected double pricePerNight;
-
-    public Room(int numberOfBeds, int squareFeet, double pricePerNight) {
-        this.numberOfBeds = numberOfBeds;
-        this.squareFeet = squareFeet;
-        this.pricePerNight = pricePerNight;
+    public Room(int b, int s, double p) {
+        beds = b;
+        size = s;
+        price = p;
     }
 
     public void displayRoomDetails() {
-        System.out.println("Beds: " + numberOfBeds);
-        System.out.println("Size: " + squareFeet + " sqft");
-        System.out.println("Price per night: " + pricePerNight);
+        System.out.println("Beds: " + beds);
+        System.out.println("Size: " + size);
+        System.out.println("Price: " + price);
     }
 }
 
-// ===== SINGLE ROOM =====
 class SingleRoom extends Room {
-    public SingleRoom() {
-        super(1, 250, 1500.0);
-    }
+    public SingleRoom() { super(1, 250, 1500); }
 }
 
-// ===== DOUBLE ROOM =====
 class DoubleRoom extends Room {
-    public DoubleRoom() {
-        super(2, 400, 2500.0);
-    }
+    public DoubleRoom() { super(2, 400, 2500); }
 }
 
-// ===== SUITE ROOM =====
 class SuiteRoom extends Room {
-    public SuiteRoom() {
-        super(3, 750, 5000.0);
-    }
+    public SuiteRoom() { super(3, 750, 5000); }
 }
