@@ -1,109 +1,53 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        // ===== UC1 =====
         initializeTrain();
-
-        // ===== UC2 =====
         roomInitialization();
-
-        // ===== UC3 =====
         trackUniqueBogies();
-
-        // ===== UC4 =====
         maintainOrderedConsist();
-
-        // ===== UC5 =====
         preserveInsertionOrder();
-
-        // ===== UC6 =====
         mapBogieCapacity();
-
-        // ===== UC7 =====
         sortBogiesByCapacity();
-
-        // ===== UC8 =====
         filterBogiesUsingStreams();
-
-        // ===== UC9 =====
-        groupBogiesByType();
-
-        // ===== UC10 =====
-        countTotalSeats();
     }
 
-    // ===== UC1 =====
     public static void initializeTrain() {
-
-        System.out.println("=================================");
         System.out.println("=== Train Consist Management App ===");
-        System.out.println("=================================\n");
-
         List<String> trainConsist = new ArrayList<>();
-
-        System.out.println("Train initialized successfully...");
-        System.out.println("Initial Bogie Count : " + trainConsist.size());
-        System.out.println("Current Train Consist : " + trainConsist);
-
-        System.out.println("\nSystem ready for operations...\n");
+        System.out.println("Initial Bogie Count: " + trainConsist.size());
     }
 
-    // ===== UC2 =====
     public static void roomInitialization() {
-
-        System.out.println("=================================");
-        System.out.println("Hotel Room Initialization");
-        System.out.println("=================================\n");
-
         Room single = new SingleRoom();
-        Room doubleroom = new DoubleRoom();
+        Room doubleRoom = new DoubleRoom();
         Room suite = new SuiteRoom();
 
-        System.out.println("Single Room:");
         single.displayRoomDetails();
-
-        System.out.println("\nDouble Room:");
-        doubleroom.displayRoomDetails();
-
-        System.out.println("\nSuite Room:");
+        doubleRoom.displayRoomDetails();
         suite.displayRoomDetails();
-
-        System.out.println("\nUC2 completed...\n");
     }
 
-    // ===== UC3 =====
     public static void trackUniqueBogies() {
-
-        System.out.println("=================================");
-        System.out.println("UC3 - Track Unique Bogie IDs");
-        System.out.println("=================================\n");
-
         Set<String> bogies = new HashSet<>();
-
         bogies.add("B101");
         bogies.add("B102");
-        bogies.add("B103");
-        bogies.add("B104");
-        bogies.add("B101"); // duplicate
+        bogies.add("B101");
 
         System.out.println("Bogie IDs:");
         System.out.println(bogies);
+ feature/UC8
+        System.out.println("Duplicates ignored");
+
 
         System.out.println("\nDuplicates are ignored by HashSet");
         System.out.println("\nUC3 completed...\n");
+ main
     }
 
-    // ===== UC4 =====
     public static void maintainOrderedConsist() {
-
-        System.out.println("=================================");
-        System.out.println("UC4 - Maintain Ordered Bogie Consist");
-        System.out.println("=================================\n");
-
         LinkedList<String> train = new LinkedList<>();
 
         train.add("Engine");
@@ -125,17 +69,17 @@ public class TrainConsistManagementApp {
 
         System.out.println("\nAfter removing first & last:");
         System.out.println(train);
-
-        System.out.println("\nUC4 completed...\n");
     }
 
-    // ===== UC5 =====
     public static void preserveInsertionOrder() {
+ feature/UC8
+
 
         System.out.println("=================================");
         System.out.println("UC5 - Preserve Insertion Order");
         System.out.println("=================================\n");
 
+main
         Set<String> formation = new LinkedHashSet<>();
 
         formation.add("Engine");
@@ -146,18 +90,19 @@ public class TrainConsistManagementApp {
 
         System.out.println("Final Formation:");
         System.out.println(formation);
-
-        System.out.println("\nUC5 completed...\n");
     }
 
-    // ===== UC6 =====
     public static void mapBogieCapacity() {
+feature/UC8
+        Map<String, Integer> map = new HashMap<>();
+
 
         System.out.println("=================================");
         System.out.println("UC6 - Map Bogie Capacity");
         System.out.println("=================================\n");
 
         Map<String, Integer> capacityMap = new HashMap<>();
+ main
 
         capacityMap.put("First Class", 24);
         capacityMap.put("Cargo", 120);
@@ -167,17 +112,17 @@ public class TrainConsistManagementApp {
         for (Map.Entry<String, Integer> entry : capacityMap.entrySet()) {
             System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
-
-        System.out.println("\nUC6 completed...\n");
     }
 
-    // ===== UC7 =====
     public static void sortBogiesByCapacity() {
+
+feature/UC8
 
         System.out.println("======================================");
         System.out.println("UC7 - Sort Bogies by Capacity");
         System.out.println("======================================\n");
 
+main
         class Bogie {
             String name;
             int capacity;
@@ -206,17 +151,17 @@ public class TrainConsistManagementApp {
         for (Bogie b : bogies) {
             System.out.println(b.name + " -> " + b.capacity);
         }
-
-        System.out.println("\nUC7 completed...\n");
     }
 
-    // ===== UC8 =====
     public static void filterBogiesUsingStreams() {
+
+ feature/UC8
 
         System.out.println("======================================");
         System.out.println("UC8 - Filter Bogies Using Streams");
         System.out.println("======================================\n");
 
+main
         class Bogie {
             String name;
             int capacity;
@@ -247,6 +192,8 @@ public class TrainConsistManagementApp {
         for (Bogie b : filtered) {
             System.out.println(b.name + " -> " + b.capacity);
         }
+feature/UC8
+
 
         System.out.println("\nUC8 completed...\n");
     }
@@ -329,10 +276,11 @@ public class TrainConsistManagementApp {
         System.out.println("\nTotal Seating Capacity: " + totalSeats);
 
         System.out.println("\nUC10 completed...\n");
+ main
     }
 }
 
-// ===== ROOM CLASSES =====
+// ROOM CLASSES
 abstract class Room {
     protected int numberOfBeds;
     protected int squareFeet;
