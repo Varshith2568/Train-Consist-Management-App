@@ -4,92 +4,43 @@ public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        // ===== UC1 =====
         initializeTrain();
-
-        // ===== UC2 =====
         roomInitialization();
-
-        // ===== UC3 =====
         trackUniqueBogies();
-
-        // ===== UC4 =====
         maintainOrderedConsist();
-
-        // ===== UC5 =====
         preserveInsertionOrder();
-
-        // ===== UC6 =====
         mapBogieCapacity();
-
-        // ===== UC7 =====
         sortBogiesByCapacity();
-
-        // ===== UC8 =====
         filterBogiesUsingStreams();
     }
 
-    // ===== UC1 =====
     public static void initializeTrain() {
-
-        System.out.println("=================================");
         System.out.println("=== Train Consist Management App ===");
-        System.out.println("=================================\n");
-
         List<String> trainConsist = new ArrayList<>();
-
-        System.out.println("Train initialized successfully...");
-        System.out.println("Initial Bogie Count : " + trainConsist.size());
-        System.out.println("Current Train Consist : " + trainConsist);
-
-        System.out.println("\nSystem ready for operations...\n");
+        System.out.println("Initial Bogie Count: " + trainConsist.size());
     }
 
-    // ===== UC2 =====
     public static void roomInitialization() {
-
-        System.out.println("=================================");
-        System.out.println("Hotel Room Initialization");
-        System.out.println("=================================\n");
-
         Room single = new SingleRoom();
-        Room doubleroom = new DoubleRoom();
+        Room doubleRoom = new DoubleRoom();
         Room suite = new SuiteRoom();
 
         single.displayRoomDetails();
-        doubleroom.displayRoomDetails();
+        doubleRoom.displayRoomDetails();
         suite.displayRoomDetails();
-
-        System.out.println("\nUC2 completed...\n");
     }
 
-    // ===== UC3 =====
     public static void trackUniqueBogies() {
-
-        System.out.println("=================================");
-        System.out.println("UC3 - Track Unique Bogie IDs");
-        System.out.println("=================================\n");
-
         Set<String> bogies = new HashSet<>();
-
         bogies.add("B101");
         bogies.add("B102");
-        bogies.add("B103");
-        bogies.add("B104");
         bogies.add("B101");
 
         System.out.println(bogies);
-
-        System.out.println("\nUC3 completed...\n");
+        System.out.println("Duplicates ignored");
     }
 
-    // ===== UC4 =====
     public static void maintainOrderedConsist() {
-
-        System.out.println("=================================");
-        System.out.println("UC4 - Maintain Ordered Bogie Consist");
-        System.out.println("=================================\n");
-
         LinkedList<String> train = new LinkedList<>();
 
         train.add("Engine");
@@ -101,17 +52,9 @@ public class TrainConsistManagementApp {
         train.add(2, "Pantry");
 
         System.out.println(train);
-
-        System.out.println("\nUC4 completed...\n");
     }
 
-    // ===== UC5 =====
     public static void preserveInsertionOrder() {
-
-        System.out.println("=================================");
-        System.out.println("UC5 - Preserve Order");
-        System.out.println("=================================\n");
-
         Set<String> formation = new LinkedHashSet<>();
 
         formation.add("Engine");
@@ -121,17 +64,9 @@ public class TrainConsistManagementApp {
         formation.add("Sleeper");
 
         System.out.println(formation);
-
-        System.out.println("\nUC5 completed...\n");
     }
 
-    // ===== UC6 =====
     public static void mapBogieCapacity() {
-
-        System.out.println("=================================");
-        System.out.println("UC6 - Map Capacity");
-        System.out.println("=================================\n");
-
         Map<String, Integer> map = new HashMap<>();
 
         map.put("Sleeper", 72);
@@ -141,16 +76,9 @@ public class TrainConsistManagementApp {
         for (Map.Entry<String, Integer> e : map.entrySet()) {
             System.out.println(e.getKey() + " -> " + e.getValue());
         }
-
-        System.out.println("\nUC6 completed...\n");
     }
 
-    // ===== UC7 =====
     public static void sortBogiesByCapacity() {
-
-        System.out.println("=================================");
-        System.out.println("UC7 - Sort Bogies");
-        System.out.println("=================================\n");
 
         class Bogie {
             String name;
@@ -173,16 +101,9 @@ public class TrainConsistManagementApp {
         for (Bogie b : list) {
             System.out.println(b.name + " -> " + b.capacity);
         }
-
-        System.out.println("\nUC7 completed...\n");
     }
 
-    // ===== UC8 =====
     public static void filterBogiesUsingStreams() {
-
-        System.out.println("=================================");
-        System.out.println("UC8 - Filter Bogies");
-        System.out.println("=================================\n");
 
         class Bogie {
             String name;
@@ -208,12 +129,10 @@ public class TrainConsistManagementApp {
         for (Bogie b : filtered) {
             System.out.println(b.name + " -> " + b.capacity);
         }
-
-        System.out.println("\nUC8 completed...\n");
     }
 }
 
-// ===== ROOM CLASSES =====
+// ROOM CLASSES
 abstract class Room {
     protected int beds;
     protected int size;
