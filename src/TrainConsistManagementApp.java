@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
 
@@ -28,15 +27,6 @@ public class TrainConsistManagementApp {
 
         // ===== UC8 =====
         filterBogiesUsingStreams();
-
-        // ===== UC9 =====
-        groupBogiesByType();
-
-        // ===== UC10 =====
-        countTotalSeats();
-
-        // ===== UC11 =====
-        validateTrainAndCargo();
     }
 
     // ===== UC1 =====
@@ -66,13 +56,8 @@ public class TrainConsistManagementApp {
         Room doubleroom = new DoubleRoom();
         Room suite = new SuiteRoom();
 
-        System.out.println("Single Room:");
         single.displayRoomDetails();
-
-        System.out.println("\nDouble Room:");
         doubleroom.displayRoomDetails();
-
-        System.out.println("\nSuite Room:");
         suite.displayRoomDetails();
 
         System.out.println("\nUC2 completed...\n");
@@ -91,7 +76,7 @@ public class TrainConsistManagementApp {
         bogies.add("B102");
         bogies.add("B103");
         bogies.add("B104");
-        bogies.add("B101"); // duplicate
+        bogies.add("B101");
 
         System.out.println(bogies);
 
@@ -225,130 +210,6 @@ public class TrainConsistManagementApp {
         }
 
         System.out.println("\nUC8 completed...\n");
-    }
-
-    // ===== UC9 =====
-    public static void groupBogiesByType() {
-
-        System.out.println("=================================");
-        System.out.println("UC9 - Group Bogies");
-        System.out.println("=================================\n");
-
-        class Bogie {
-            String name;
-            int capacity;
-
-            Bogie(String name, int capacity) {
-                this.name = name;
-                this.capacity = capacity;
-            }
-        }
-
-        List<Bogie> list = new ArrayList<>();
-
-        list.add(new Bogie("Sleeper", 72));
-        list.add(new Bogie("AC Chair", 56));
-        list.add(new Bogie("Sleeper", 72));
-        list.add(new Bogie("First Class", 24));
-
-        Map<String, List<Bogie>> grouped =
-                list.stream().collect(Collectors.groupingBy(b -> b.name));
-
-        for (String key : grouped.keySet()) {
-            System.out.println(key + ":");
-            for (Bogie b : grouped.get(key)) {
-                System.out.println("  " + b.capacity);
-            }
-        }
-
-        System.out.println("\nUC9 completed...\n");
-    }
-
-    // ===== UC10 =====
-    public static void countTotalSeats() {
-
-        System.out.println("======================================");
-        System.out.println("UC10 - Count Total Seats (Reduce)");
-        System.out.println("======================================\n");
-
-        class Bogie {
-            String name;
-            int capacity;
-
-            Bogie(String name, int capacity) {
-                this.name = name;
-                this.capacity = capacity;
-            }
-        }
-
-        // Create list
-        List<Bogie> bogies = new ArrayList<>();
-
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 56));
-        bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("General", 90));
-
-        // DISPLAY
-        System.out.println("Bogies:");
-        for (Bogie b : bogies) {
-            System.out.println(b.name + " -> " + b.capacity);
-        }
-
-        // MAP + REDUCE
-        int totalSeats = bogies.stream()
-                .map(b -> b.capacity)
-                .reduce(0, Integer::sum);
-
-        System.out.println("\nTotal Seating Capacity: " + totalSeats);
-
-        System.out.println("\nUC10 completed...\n");
-    }
-
-    // ===== UC11 =====
-    public static void validateTrainAndCargo() {
-
-        System.out.println("======================================");
-        System.out.println("UC11 - Validate Train ID & Cargo Code");
-        System.out.println("======================================\n");
-
-        // Sample Inputs (you can change for testing)
-        String trainId = "TRN-1234";
-        String cargoCode = "PET-AB";
-
-        // REGEX PATTERNS
-        String trainPattern = "TRN-\\d{4}";
-        String cargoPattern = "PET-[A-Z]{2}";
-
-        // COMPILE PATTERNS
-        java.util.regex.Pattern trainRegex = java.util.regex.Pattern.compile(trainPattern);
-        java.util.regex.Pattern cargoRegex = java.util.regex.Pattern.compile(cargoPattern);
-
-        // CREATE MATCHERS
-        java.util.regex.Matcher trainMatcher = trainRegex.matcher(trainId);
-        java.util.regex.Matcher cargoMatcher = cargoRegex.matcher(cargoCode);
-
-        // VALIDATE
-        boolean isTrainValid = trainMatcher.matches();
-        boolean isCargoValid = cargoMatcher.matches();
-
-        // DISPLAY RESULTS
-        System.out.println("Train ID: " + trainId);
-        System.out.println("Cargo Code: " + cargoCode);
-
-        if (isTrainValid) {
-            System.out.println("Train ID is VALID");
-        } else {
-            System.out.println("Train ID is INVALID");
-        }
-
-        if (isCargoValid) {
-            System.out.println("Cargo Code is VALID");
-        } else {
-            System.out.println("Cargo Code is INVALID");
-        }
-
-        System.out.println("\nUC11 validation completed...\n");
     }
 }
 
