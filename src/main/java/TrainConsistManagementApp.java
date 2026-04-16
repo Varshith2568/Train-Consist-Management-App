@@ -1,3 +1,5 @@
+package main.java;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +39,9 @@ public class TrainConsistManagementApp {
 
         // ===== UC11 =====
         validateTrainAndCargo();
+
+        // ===== UC12 =====
+        checkSafetyCompliance();
     }
 
     // ===== UC1 =====
@@ -59,20 +64,20 @@ public class TrainConsistManagementApp {
     public static void roomInitialization() {
 
         System.out.println("=================================");
-        System.out.println("Hotel Room Initialization");
+        System.out.println("Hotel main.java.Room Initialization");
         System.out.println("=================================\n");
 
         Room single = new SingleRoom();
         Room doubleroom = new DoubleRoom();
         Room suite = new SuiteRoom();
 
-        System.out.println("Single Room:");
+        System.out.println("Single main.java.Room:");
         single.displayRoomDetails();
 
-        System.out.println("\nDouble Room:");
+        System.out.println("\nDouble main.java.Room:");
         doubleroom.displayRoomDetails();
 
-        System.out.println("\nSuite Room:");
+        System.out.println("\nSuite main.java.Room:");
         suite.displayRoomDetails();
 
         System.out.println("\nUC2 completed...\n");
@@ -350,6 +355,48 @@ public class TrainConsistManagementApp {
 
         System.out.println("\nUC11 validation completed...\n");
     }
+
+
+    // ===== UC12 =====
+    public static void checkSafetyCompliance() {
+
+        System.out.println("======================================");
+        System.out.println("UC12 - Safety Compliance Check");
+        System.out.println("======================================\n");
+
+        class GoodsBogie {
+            String type;
+            String cargo;
+
+            GoodsBogie(String type, String cargo) {
+                this.type = type;
+                this.cargo = cargo;
+            }
+        }
+
+        List<GoodsBogie> goodsBogies = new ArrayList<>();
+
+        goodsBogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        goodsBogies.add(new GoodsBogie("Open", "Coal"));
+        goodsBogies.add(new GoodsBogie("Box", "Grain"));
+
+        // Safety Rule
+        boolean isSafe = goodsBogies.stream()
+                .allMatch(b ->
+                        !b.type.equalsIgnoreCase("Cylindrical") ||
+                                b.cargo.equalsIgnoreCase("Petroleum")
+                );
+
+        if (isSafe) {
+            System.out.println("Train is SAFE ✅");
+        } else {
+            System.out.println("Train is NOT SAFE ❌");
+        }
+
+        System.out.println("\nUC12 completed...\n");
+    }
+
+
 }
 
 // ===== ROOM CLASSES =====
