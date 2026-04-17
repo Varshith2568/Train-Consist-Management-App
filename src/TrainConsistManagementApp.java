@@ -22,6 +22,7 @@ public class TrainConsistManagementApp {
         safeCargoAssignment();        // UC15
         bubbleSortCapacities();   // UC16
         sortBogieNames();   // UC17
+        linearSearchBogie();   // UC18
     }
 
     // ===== UC1 =====
@@ -472,6 +473,42 @@ public class TrainConsistManagementApp {
         System.out.println(Arrays.toString(bogieNames));
 
         System.out.println("\nUC17 sorting completed...\n");
+    }
+
+    // ===== UC18 =====
+    public static void linearSearchBogie() {
+        System.out.println("=====================================");
+        System.out.println("UC18 - Linear Search for Bogie ID");
+        System.out.println("=====================================\n");
+
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+
+        String searchId = "BG309";
+
+        // Display all IDs
+        System.out.println("Available Bogie IDs:");
+        for (String id : bogieIds) {
+            System.out.println(id);
+        }
+
+        boolean found = false;
+
+        // Linear Search
+        for (String id : bogieIds) {
+            if (id.equals(searchId)) {
+                found = true;
+                break;
+            }
+        }
+
+        // Result
+        if (found) {
+            System.out.println("\nBogie " + searchId + " found in train consist.");
+        } else {
+            System.out.println("\nBogie " + searchId + " NOT found.");
+        }
+
+        System.out.println("\nUC18 search completed...\n");
     }
 }
 
