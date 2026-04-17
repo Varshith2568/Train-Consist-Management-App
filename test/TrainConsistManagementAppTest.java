@@ -88,6 +88,25 @@ class TrainConsistManagementAppTest {
         assertFalse(result);
     }
 
+ feature/UC18
+
+    @Test
+    void testSafety_EmptyList() {
+
+        List<GoodsBogie> list = new ArrayList<>();
+
+        boolean result = list.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") ||
+                                b.cargo.equals("Petroleum")
+                );
+
+        assertTrue(result); // empty = safe
+    }
+
+
+ develop
+ main
     // ================= UC13 =================
     static class BogieUC13 {
         int capacity;
@@ -145,6 +164,7 @@ class TrainConsistManagementAppTest {
         assertNull(g.cargo);
     }
 
+ feature/UC16
     // ================= UC16 =================
     int[] bubbleSort(int[] arr) {
         int[] a = Arrays.copyOf(arr, arr.length);
@@ -168,6 +188,7 @@ class TrainConsistManagementAppTest {
                 bubbleSort(new int[]{24,56,60,70,72}));
     }
 
+ feature/UC17
     // ================= UC17 =================
     @Test
     void testUC17_Sorting() {
@@ -191,4 +212,13 @@ class TrainConsistManagementAppTest {
     void testUC18_NotFound() {
         assertFalse(search(new String[]{"BG101","BG309"}, "BG999"));
     }
+ feature/UC18
 }
+
+main
+ main
+ main
+
+
+}
+ main
