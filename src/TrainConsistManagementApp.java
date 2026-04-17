@@ -19,7 +19,11 @@ public class TrainConsistManagementApp {
 develop
         checkSafetyCompliance();        // UC12
         performanceComparison();        // UC13
+ feature/UC14
+        handleInvalidCapacity();   // UC14
 
+
+ main
  main
     }
 
@@ -366,6 +370,47 @@ main
         System.out.println("Train Safety: " + (isSafe ? "SAFE" : "UNSAFE"));
         System.out.println();
  main
+    }
+
+    // ===== UC14 =====
+    public static void handleInvalidCapacity() {
+        System.out.println("=====================================");
+        System.out.println("UC14 - Handle Invalid Bogie Capacity");
+        System.out.println("=====================================\n");
+
+        // Custom Exception
+        class InvalidCapacityException extends Exception {
+            public InvalidCapacityException(String message) {
+                super(message);
+            }
+        }
+
+        // Passenger Bogie
+        class PassengerBogie {
+            String type;
+            int capacity;
+
+            PassengerBogie(String type, int capacity) throws InvalidCapacityException {
+                if (capacity <= 0) {
+                    throw new InvalidCapacityException("Capacity must be greater than zero");
+                }
+                this.type = type;
+                this.capacity = capacity;
+            }
+        }
+
+        try {
+            PassengerBogie b1 = new PassengerBogie("Sleeper", 72);
+            System.out.println("Created Bogie: " + b1.type + " -> " + b1.capacity);
+
+            // Invalid case
+            PassengerBogie b2 = new PassengerBogie("AC", 0);
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        System.out.println("\nUC14 exception handling completed...\n");
     }
 }
 
