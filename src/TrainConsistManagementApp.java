@@ -24,6 +24,13 @@ public class TrainConsistManagementApp {
         sortBogieNames();
         linearSearchBogie();
         binarySearchBogie();
+
+        // ✅ UC20 handled safely
+        try {
+            searchWithValidation();
+        } catch (IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     // ===== UC1 =====
@@ -61,8 +68,8 @@ public class TrainConsistManagementApp {
         train.add("Engine");
         train.add("Sleeper");
         train.add("AC");
-
         train.add(1, "Pantry");
+
         System.out.println(train + "\n");
     }
 
@@ -104,6 +111,7 @@ public class TrainConsistManagementApp {
         List<String> list = Arrays.asList("Sleeper", "AC", "Sleeper");
         Map<String, Long> map = list.stream()
                 .collect(Collectors.groupingBy(x -> x, Collectors.counting()));
+
         System.out.println(map + "\n");
     }
 
@@ -151,12 +159,8 @@ public class TrainConsistManagementApp {
 
     // ===== UC14 =====
     public static void handleInvalidCapacity() {
-        class InvalidCapacityException extends Exception {
-            InvalidCapacityException(String m) { super(m); }
-        }
-
         try {
-            if (0 <= 0) throw new InvalidCapacityException("Invalid");
+            throw new Exception("Invalid");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -211,6 +215,20 @@ public class TrainConsistManagementApp {
                 return;
             } else if (cmp < 0) high = mid - 1;
             else low = mid + 1;
+        }
+    }
+
+    // ===== UC20 =====
+    public static void searchWithValidation() {
+
+        System.out.println("=====================================");
+        System.out.println("UC20 - Exception Handling During Search");
+        System.out.println("=====================================\n");
+
+        String[] bogieIds = {}; // empty
+
+        if (bogieIds.length == 0) {
+            throw new IllegalStateException("No bogies available in train. Cannot perform search.");
         }
     }
 }

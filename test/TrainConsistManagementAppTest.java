@@ -220,4 +220,54 @@ class TrainConsistManagementAppTest {
                 new String[]{"BG101","BG205","BG309","BG412","BG550"},
                 "BG999"));
     }
+
+
+// ================= UC20 =================
+
+    boolean searchWithValidation(String[] arr, String key) {
+
+        if (arr.length == 0) {
+            throw new IllegalStateException("No bogies available in train. Cannot perform search.");
+        }
+
+        for (String s : arr) {
+            if (s.equals(key)) return true;
+        }
+        return false;
+    }
+
+    @Test
+    void testSearch_ThrowsExceptionWhenEmpty() {
+        assertThrows(IllegalStateException.class, () -> {
+            searchWithValidation(new String[]{}, "BG101");
+        });
+    }
+
+    @Test
+    void testSearch_AllowsSearchWhenDataExists() {
+        assertDoesNotThrow(() -> {
+            searchWithValidation(new String[]{"BG101","BG205"}, "BG101");
+        });
+    }
+
+    @Test
+    void testSearch_BogieFoundAfterValidation() {
+        assertTrue(searchWithValidation(
+                new String[]{"BG101","BG205","BG309"}, "BG205"));
+    }
+
+    @Test
+    void testSearch_BogieNotFoundAfterValidation() {
+        assertFalse(searchWithValidation(
+                new String[]{"BG101","BG205","BG309"}, "BG999"));
+    }
+
+    @Test
+    void testSearch_SingleElementValidCase() {
+        assertTrue(searchWithValidation(
+                new String[]{"BG101"}, "BG101"));
+    }
+
 }
+
+
