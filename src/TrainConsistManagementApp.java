@@ -5,6 +5,7 @@ public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
+ feature/UC19
         initializeTrain();
         roomInitialization();
         trackUniqueBogies();
@@ -24,13 +25,54 @@ public class TrainConsistManagementApp {
         sortBogieNames();
         linearSearchBogie();
         binarySearchBogie();
+ feature/UC20
 
-        // ✅ UC20 handled safely
+       
         try {
             searchWithValidation();
         } catch (IllegalStateException e) {
             System.out.println("Error: " + e.getMessage());
         }
+
+        initializeTrain();              // UC1
+        roomInitialization();           // UC2
+        trackUniqueBogies();            // UC3
+        maintainOrderedConsist();       // UC4
+        preserveInsertionOrder();       // UC5
+        mapBogieCapacity();             // UC6
+        sortBogiesByCapacity();         // UC7
+        filterBogiesUsingStreams();     // UC8
+        groupBogiesByType();            // UC9
+        countTotalSeats();              // UC10
+        validateTrainAndCargo();        // UC11
+develop
+        checkSafetyCompliance();        // UC12
+        performanceComparison();        // UC13
+ feature/UC15
+        handleInvalidCapacity();       // UC14
+        safeCargoAssignment();        // UC15
+ feature/UC16
+        bubbleSortCapacities();   // UC16
+feature/UC17
+        sortBogieNames();   // UC17
+ feature/UC18
+        linearSearchBogie();   // UC18
+
+
+
+
+ feature/UC14
+        handleInvalidCapacity();   // UC14
+
+
+ main
+ main
+main
+ main
+main
+ main
+ main
+ main
     }
 
     // ===== UC1 =====
@@ -218,6 +260,7 @@ public class TrainConsistManagementApp {
         }
     }
 
+ feature/UC20
     // ===== UC20 =====
     public static void searchWithValidation() {
 
@@ -230,6 +273,194 @@ public class TrainConsistManagementApp {
         if (bogieIds.length == 0) {
             throw new IllegalStateException("No bogies available in train. Cannot perform search.");
         }
+
+    // ===== UC14 =====
+    public static void handleInvalidCapacity() {
+        System.out.println("=====================================");
+        System.out.println("UC14 - Handle Invalid Bogie Capacity");
+        System.out.println("=====================================\n");
+
+        // Custom Exception
+        class InvalidCapacityException extends Exception {
+            public InvalidCapacityException(String message) {
+                super(message);
+            }
+        }
+
+        // Passenger Bogie
+        class PassengerBogie {
+            String type;
+            int capacity;
+
+            PassengerBogie(String type, int capacity) throws InvalidCapacityException {
+                if (capacity <= 0) {
+                    throw new InvalidCapacityException("Capacity must be greater than zero");
+                }
+                this.type = type;
+                this.capacity = capacity;
+            }
+        }
+
+        try {
+            PassengerBogie b1 = new PassengerBogie("Sleeper", 72);
+            System.out.println("Created Bogie: " + b1.type + " -> " + b1.capacity);
+
+            // Invalid case
+            PassengerBogie b2 = new PassengerBogie("AC", 0);
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        System.out.println("\nUC14 exception handling completed...\n");
+    }
+
+    // ===== UC15 =====
+    public static void safeCargoAssignment() {
+        System.out.println("=====================================");
+        System.out.println("UC15 - Safe Cargo Assignment");
+        System.out.println("=====================================\n");
+
+        // Custom Runtime Exception
+        class CargoSafetyException extends RuntimeException {
+            public CargoSafetyException(String message) {
+                super(message);
+            }
+        }
+
+        // Goods Bogie
+        class GoodsBogie {
+            String shape;
+            String cargo;
+
+            GoodsBogie(String shape) {
+                this.shape = shape;
+            }
+
+            void assignCargo(String cargo) {
+                try {
+                    // Rule: Rectangular cannot carry Petroleum
+                    if (shape.equals("Rectangular") && cargo.equals("Petroleum")) {
+                        throw new CargoSafetyException("Unsafe cargo assignment!");
+                    }
+
+                    this.cargo = cargo;
+                    System.out.println("Cargo assigned successfully -> " + cargo);
+
+                } catch (CargoSafetyException e) {
+                    System.out.println("Error: " + e.getMessage());
+
+                } finally {
+                    System.out.println("Cargo validation completed for " + shape + " bogie");
+                }
+            }
+        }
+
+        //  Safe case
+        GoodsBogie g1 = new GoodsBogie("Cylindrical");
+        g1.assignCargo("Petroleum");
+
+        System.out.println();
+
+        //  Unsafe case
+        GoodsBogie g2 = new GoodsBogie("Rectangular");
+        g2.assignCargo("Petroleum");
+
+        System.out.println("\nUC15 runtime handling completed...\n");
+    }
+
+    // ===== UC16 =====
+    public static void bubbleSortCapacities() {
+        System.out.println("=====================================");
+        System.out.println("UC16 - Manual Sorting using Bubble Sort");
+        System.out.println("=====================================\n");
+
+        int[] capacities = {72, 56, 24, 70, 60};
+
+        // Display original
+        System.out.println("Original Capacities:");
+        for (int c : capacities) {
+            System.out.print(c + " ");
+        }
+
+        // Bubble Sort
+        for (int i = 0; i < capacities.length - 1; i++) {
+            for (int j = 0; j < capacities.length - i - 1; j++) {
+
+                if (capacities[j] > capacities[j + 1]) {
+                    int temp = capacities[j];
+                    capacities[j] = capacities[j + 1];
+                    capacities[j + 1] = temp;
+                }
+            }
+        }
+
+        // Display sorted
+        System.out.println("\n\nSorted Capacities (Ascending):");
+        for (int c : capacities) {
+            System.out.print(c + " ");
+        }
+
+        System.out.println("\n\nUC16 sorting completed...\n");
+    }
+
+    // ===== UC17 =====
+    public static void sortBogieNames() {
+        System.out.println("=====================================");
+        System.out.println("UC17 - Sort Bogie Names Using Arrays.sort()");
+        System.out.println("=====================================\n");
+
+        String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+
+        // Original
+        System.out.println("Original Bogie Names:");
+        System.out.println(Arrays.toString(bogieNames));
+
+        // Sorting using built-in method
+        Arrays.sort(bogieNames);
+
+        // Sorted output
+        System.out.println("\nSorted Bogie Names (Alphabetical):");
+        System.out.println(Arrays.toString(bogieNames));
+
+        System.out.println("\nUC17 sorting completed...\n");
+    }
+
+    // ===== UC18 =====
+    public static void linearSearchBogie() {
+        System.out.println("=====================================");
+        System.out.println("UC18 - Linear Search for Bogie ID");
+        System.out.println("=====================================\n");
+
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+
+        String searchId = "BG309";
+
+        // Display all IDs
+        System.out.println("Available Bogie IDs:");
+        for (String id : bogieIds) {
+            System.out.println(id);
+        }
+
+        boolean found = false;
+
+        // Linear Search
+        for (String id : bogieIds) {
+            if (id.equals(searchId)) {
+                found = true;
+                break;
+            }
+        }
+
+        // Result
+        if (found) {
+            System.out.println("\nBogie " + searchId + " found in train consist.");
+        } else {
+            System.out.println("\nBogie " + searchId + " NOT found.");
+        }
+
+        System.out.println("\nUC18 search completed...\n");
+ main
     }
 }
 

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TrainConsistManagementAppTest {
 
+ feature/UC19
     // ================= COMMON CLASSES =================
 
     // For UC12 safety tests
@@ -42,6 +43,8 @@ class TrainConsistManagementAppTest {
         }
     }
 
+
+ main
     // ================= UC8 =================
     @Test
     void testUC8_FilterValid() {
@@ -53,24 +56,46 @@ class TrainConsistManagementAppTest {
     @Test
     void testUC8_NoMatch() {
         List<Integer> input = Arrays.asList(10, 20, 30);
+ feature/UC19
         assertTrue(input.stream().filter(x -> x > 60).toList().isEmpty());
+
+        List<Integer> result = input.stream().filter(x -> x > 60).toList();
+        assertTrue(result.isEmpty());
+ main
     }
 
     @Test
     void testUC8_AllMatch() {
         List<Integer> input = Arrays.asList(70, 80, 90);
+ feature/UC19
         assertEquals(input, input.stream().filter(x -> x > 60).toList());
+
+        List<Integer> result = input.stream().filter(x -> x > 60).toList();
+        assertEquals(input, result);
+main
     }
 
     // ================= UC10 =================
     @Test
     void testUC10_TotalSeats() {
+ feature/UC19
         assertEquals(242, Arrays.asList(72,56,24,90).stream().reduce(0, Integer::sum));
+
+        List<Integer> input = Arrays.asList(72, 56, 24, 90);
+        int total = input.stream().reduce(0, Integer::sum);
+        assertEquals(242, total);
+ main
     }
 
     @Test
     void testUC10_EmptyList() {
+ feature/UC19
         assertEquals(0, new ArrayList<Integer>().stream().reduce(0, Integer::sum));
+
+        List<Integer> input = new ArrayList<>();
+        int total = input.stream().reduce(0, Integer::sum);
+        assertEquals(0, total);
+ main
     }
 
     // ================= UC11 =================
@@ -92,11 +117,21 @@ class TrainConsistManagementAppTest {
     @Test
     void testUC11_InvalidCargoCode() {
         assertFalse("PET-123".matches("PET-[A-Z]{2}"));
+ feature/UC19
+
+    }
+
+    // ================= UC12 =================
+    static class GoodsBogieUC12 {
+        String type, cargo;
+        GoodsBogieUC12(String t, String c) { type = t; cargo = c; }
+ main
     }
 
     // ================= UC12 =================
     @Test
     void testUC12_AllValid() {
+feature/UC19
         List<GoodsBogie> list = Arrays.asList(
                 new GoodsBogie("Cylindrical", "Petroleum"),
                 new GoodsBogie("Rectangular", "Coal")
@@ -105,11 +140,20 @@ class TrainConsistManagementAppTest {
         boolean result = list.stream()
                 .allMatch(b -> !b.type.equals("Cylindrical") || b.cargo.equals("Petroleum"));
 
+
+        List<GoodsBogieUC12> list = Arrays.asList(
+                new GoodsBogieUC12("Cylindrical", "Petroleum"),
+                new GoodsBogieUC12("Rectangular", "Coal")
+        );
+        boolean result = list.stream().allMatch(b ->
+                !b.type.equals("Cylindrical") || b.cargo.equals("Petroleum"));
+ main
         assertTrue(result);
     }
 
     @Test
     void testUC12_InvalidCase() {
+ feature/UC19
         List<GoodsBogie> list = List.of(
                 new GoodsBogie("Cylindrical", "Coal")
         );
@@ -135,6 +179,16 @@ class TrainConsistManagementAppTest {
         assertThrows(InvalidCapacityException.class, () -> new PassengerBogie(0));
     }
 
+        List<GoodsBogieUC12> list = List.of(
+                new GoodsBogieUC12("Cylindrical", "Coal"));
+        boolean result = list.stream().allMatch(b ->
+                !b.type.equals("Cylindrical") || b.cargo.equals("Petroleum"));
+        assertFalse(result);
+    }
+
+ feature/UC18
+ main
+
     // ================= UC15 =================
     @Test
     void testUC15_Safe() {
@@ -150,6 +204,7 @@ class TrainConsistManagementAppTest {
         assertNull(g.cargo);
     }
 
+feature/UC19
     // ================= UC16 =================
     int[] bubbleSort(int[] arr) {
         int[] a = Arrays.copyOf(arr, arr.length);
@@ -165,10 +220,40 @@ class TrainConsistManagementAppTest {
     void testUC16_Basic() {
         assertArrayEquals(new int[]{24,56,60,70,72},
                 bubbleSort(new int[]{72,56,24,70,60}));
+
+ develop
+ main
+    // ================= UC13 =================
+    static class BogieUC13 {
+        int capacity;
+        BogieUC13(int c) { capacity = c; }
+    }
+
+    @Test
+    void testUC13_FilterLogic() {
+        List<BogieUC13> list = Arrays.asList(
+                new BogieUC13(50), new BogieUC13(70), new BogieUC13(90));
+        long count = list.stream().filter(b -> b.capacity > 60).count();
+        assertEquals(2, count);
+    }
+
+    // ================= UC14 =================
+    static class InvalidCapacityException extends Exception {
+        InvalidCapacityException(String msg) { super(msg); }
+    }
+
+    static class PassengerBogie {
+        int capacity;
+        PassengerBogie(int c) throws InvalidCapacityException {
+            if (c <= 0) throw new InvalidCapacityException("Capacity must be greater than zero");
+            capacity = c;
+        }
+ main
     }
 
     // ================= UC17 =================
     @Test
+ feature/UC19
     void testUC17_Sorting() {
         String[] arr = {"Sleeper","AC Chair","General"};
         Arrays.sort(arr);
@@ -204,10 +289,76 @@ class TrainConsistManagementAppTest {
             else if (cmp < 0) high = mid - 1;
             else low = mid + 1;
         }
+
+    void testUC14_Exception() {
+        assertThrows(InvalidCapacityException.class, () -> new PassengerBogie(0));
+    }
+
+    // ================= UC15 =================
+    static class CargoBogie {
+        String shape, cargo;
+        CargoBogie(String s) { shape = s; }
+
+        void assign(String c) {
+            if (shape.equals("Rectangular") && c.equals("Petroleum")) return;
+            cargo = c;
+        }
+    }
+
+    @Test
+    void testUC15_Safe() {
+        CargoBogie g = new CargoBogie("Cylindrical");
+        g.assign("Petroleum");
+        assertEquals("Petroleum", g.cargo);
+    }
+
+    @Test
+    void testUC15_Unsafe() {
+        CargoBogie g = new CargoBogie("Rectangular");
+        g.assign("Petroleum");
+        assertNull(g.cargo);
+    }
+
+ feature/UC16
+    // ================= UC16 =================
+    int[] bubbleSort(int[] arr) {
+        int[] a = Arrays.copyOf(arr, arr.length);
+        for (int i = 0; i < a.length - 1; i++)
+            for (int j = 0; j < a.length - i - 1; j++)
+                if (a[j] > a[j+1]) {
+                    int t = a[j]; a[j] = a[j+1]; a[j+1] = t;
+                }
+        return a;
+    }
+
+    @Test
+    void testUC16_Basic() {
+        assertArrayEquals(new int[]{24,56,60,70,72},
+                bubbleSort(new int[]{72,56,24,70,60}));
+    }
+
+    @Test
+    void testUC16_AlreadySorted() {
+        assertArrayEquals(new int[]{24,56,60,70,72},
+                bubbleSort(new int[]{24,56,60,70,72}));
+    }
+    // ================= UC17 =================
+    @Test
+    void testUC17_Sorting() {
+        String[] arr = {"Sleeper","AC Chair","General"};
+        Arrays.sort(arr);
+        assertArrayEquals(new String[]{"AC Chair","General","Sleeper"}, arr);
+    }
+
+    // ================= UC18 =================
+    boolean search(String[] arr, String key) {
+        for (String s : arr) if (s.equals(key)) return true;
+
         return false;
     }
 
     @Test
+
     void testUC19_BogieFound() {
         assertTrue(binarySearch(
                 new String[]{"BG101","BG205","BG309","BG412","BG550"},
@@ -220,6 +371,7 @@ class TrainConsistManagementAppTest {
                 new String[]{"BG101","BG205","BG309","BG412","BG550"},
                 "BG999"));
     }
+ 
 
 
 // ================= UC20 =================
@@ -271,3 +423,21 @@ class TrainConsistManagementAppTest {
 }
 
 
+
+}
+
+    void testUC18_Found() {
+        assertTrue(search(new String[]{"BG101","BG309"}, "BG309"));
+    }
+
+    @Test
+    void testUC18_NotFound() {
+        assertFalse(search(new String[]{"BG101","BG309"}, "BG999"));
+    }
+
+}
+
+
+
+
+}
