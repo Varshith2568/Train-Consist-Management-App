@@ -24,6 +24,9 @@ develop
         safeCargoAssignment();        // UC15
  feature/UC16
         bubbleSortCapacities();   // UC16
+feature/UC17
+        sortBogieNames();   // UC17
+
 
 
  feature/UC14
@@ -34,6 +37,7 @@ develop
  main
 main
  main
+main
     }
 
     // ===== UC1 =====
@@ -509,6 +513,28 @@ main
         }
 
         System.out.println("\n\nUC16 sorting completed...\n");
+    }
+
+    // ===== UC17 =====
+    public static void sortBogieNames() {
+        System.out.println("=====================================");
+        System.out.println("UC17 - Sort Bogie Names Using Arrays.sort()");
+        System.out.println("=====================================\n");
+
+        String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+
+        // Original
+        System.out.println("Original Bogie Names:");
+        System.out.println(Arrays.toString(bogieNames));
+
+        // Sorting using built-in method
+        Arrays.sort(bogieNames);
+
+        // Sorted output
+        System.out.println("\nSorted Bogie Names (Alphabetical):");
+        System.out.println(Arrays.toString(bogieNames));
+
+        System.out.println("\nUC17 sorting completed...\n");
     }
 }
 
