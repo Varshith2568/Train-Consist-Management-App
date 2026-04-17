@@ -94,4 +94,102 @@ class TrainConsistManagementAppTest {
         String cargo = "PET-123";
         assertFalse(cargo.matches("PET-[A-Z]{2}"));
     }
+
+// ================= UC12 =================
+// Safety Validation
+
+    class GoodsBogie {
+        String type;
+        String cargo;
+
+        GoodsBogie(String type, String cargo) {
+            this.type = type;
+            this.cargo = cargo;
+        }
+    }
+
+    @Test
+    void testSafety_AllBogiesValid() {
+
+        List<GoodsBogie> list = Arrays.asList(
+                new GoodsBogie("Cylindrical", "Petroleum"),
+                new GoodsBogie("Rectangular", "Coal")
+        );
+
+        boolean result = list.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") ||
+                                b.cargo.equals("Petroleum")
+                );
+
+        assertTrue(result);
+    }
+
+    @Test
+    void testSafety_CylindricalWithInvalidCargo() {
+
+        List<GoodsBogie> list = Arrays.asList(
+                new GoodsBogie("Cylindrical", "Coal")
+        );
+
+        boolean result = list.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") ||
+                                b.cargo.equals("Petroleum")
+                );
+
+        assertFalse(result);
+    }
+
+    @Test
+    void testSafety_NonCylindricalAllowed() {
+
+        List<GoodsBogie> list = Arrays.asList(
+                new GoodsBogie("Rectangular", "Coal"),
+                new GoodsBogie("Open", "Grain")
+        );
+
+        boolean result = list.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") ||
+                                b.cargo.equals("Petroleum")
+                );
+
+        assertTrue(result);
+    }
+
+    @Test
+    void testSafety_MixedWithViolation() {
+
+        List<GoodsBogie> list = Arrays.asList(
+                new GoodsBogie("Cylindrical", "Petroleum"),
+                new GoodsBogie("Cylindrical", "Coal") // invalid
+        );
+
+        boolean result = list.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") ||
+                                b.cargo.equals("Petroleum")
+                );
+
+        assertFalse(result);
+    }
+
+    @Test
+    void testSafety_EmptyList() {
+
+        List<GoodsBogie> list = new ArrayList<>();
+
+        boolean result = list.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") ||
+                                b.cargo.equals("Petroleum")
+                );
+
+        assertTrue(result); // empty = safe
+    }
+
+
+
+
 }
