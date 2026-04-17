@@ -366,7 +366,52 @@ class TrainConsistManagementAppTest {
         assertNotNull(b2);
     }
 
+// ================= UC15 =================
 
+    class CargoSafetyException extends RuntimeException {
+        public CargoSafetyException(String message) {
+            super(message);
+        }
+    }
+
+    class CargoBogie {
+        String shape;
+        String cargo;
+
+        CargoBogie(String shape) {
+            this.shape = shape;
+        }
+
+        void assignCargo(String cargo) {
+            try {
+                if (shape.equals("Rectangular") && cargo.equals("Petroleum")) {
+                    throw new CargoSafetyException("Unsafe cargo assignment!");
+                }
+                this.cargo = cargo;
+
+            } catch (CargoSafetyException e) {
+                // handled
+            } finally {
+                // logging
+            }
+        }
+    }
+
+    @Test
+    void testCargo_SafeAssignment() {
+        CargoBogie g = new CargoBogie("Cylindrical");
+        g.assignCargo("Petroleum");
+
+        assertEquals("Petroleum", g.cargo);
+    }
+
+    @Test
+    void testCargo_UnsafeAssignmentHandled() {
+        CargoBogie g = new CargoBogie("Rectangular");
+        g.assignCargo("Petroleum");
+
+        assertNull(g.cargo);
+    }
 
 main
 
