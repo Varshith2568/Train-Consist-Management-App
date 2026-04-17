@@ -16,13 +16,19 @@ public class TrainConsistManagementApp {
         groupBogiesByType();            // UC9
         countTotalSeats();              // UC10
         validateTrainAndCargo();        // UC11
+develop
         checkSafetyCompliance();        // UC12
         performanceComparison();        // UC13
+<<<<<<< HEAD
         handleInvalidCapacity();       // UC14
         safeCargoAssignment();        // UC15
         bubbleSortCapacities();   // UC16
         sortBogieNames();   // UC17
         linearSearchBogie();   // UC18
+=======
+
+ main
+>>>>>>> cfe9f40d2bb360f7c0f580360fe5cdf4237da333
     }
 
     // ===== UC1 =====
@@ -55,7 +61,11 @@ public class TrainConsistManagementApp {
         Set<String> bogies = new HashSet<>();
         bogies.add("B101");
         bogies.add("B102");
+ develop
         bogies.add("B101");
+
+        bogies.add("B101"); // duplicate
+main
 
         System.out.println("Bogies: " + bogies);
         System.out.println("Duplicates ignored\n");
@@ -76,6 +86,11 @@ public class TrainConsistManagementApp {
         train.add(2, "Pantry");
         System.out.println("After adding Pantry: " + train);
 
+ develop
+
+        System.out.println("After adding Pantry: " + train);
+
+ main
         train.removeFirst();
         train.removeLast();
 
@@ -243,6 +258,7 @@ public class TrainConsistManagementApp {
 
         boolean trainValid = trainId.matches("TRN-\\d{4}");
         boolean cargoValid = cargoCode.matches("PET-[A-Z]{2}");
+ develop
 
         System.out.println("Train ID: " + trainId + " -> " + (trainValid ? "Valid" : "Invalid"));
         System.out.println("Cargo Code: " + cargoCode + " -> " + (cargoValid ? "Valid" : "Invalid"));
@@ -321,6 +337,43 @@ public class TrainConsistManagementApp {
         System.out.println("Stream Execution Time (ns): " + (endStream - startStream));
 
         System.out.println("\nUC13 performance benchmarking completed...\n");
+
+
+        System.out.println("Train ID: " + trainId + " -> " + (trainValid ? "Valid" : "Invalid"));
+        System.out.println("Cargo Code: " + cargoCode + " -> " + (cargoValid ? "Valid" : "Invalid"));
+
+        System.out.println();
+    }
+
+    // ===== UC12 =====
+    public static void checkSafetyCompliance() {
+        System.out.println("UC12 - Safety Check");
+
+        class GoodsBogie {
+            String type;
+            String cargo;
+
+            GoodsBogie(String type, String cargo) {
+                this.type = type;
+                this.cargo = cargo;
+            }
+        }
+
+        List<GoodsBogie> bogies = new ArrayList<>();
+
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        bogies.add(new GoodsBogie("Rectangular", "Coal"));
+        bogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+
+        boolean isSafe = bogies.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") ||
+                                b.cargo.equals("Petroleum")
+                );
+
+        System.out.println("Train Safety: " + (isSafe ? "SAFE" : "UNSAFE"));
+        System.out.println();
+ main
     }
 
     // ===== UC14 =====

@@ -88,6 +88,59 @@ class TrainConsistManagementAppTest {
         assertFalse(result);
     }
 
+<<<<<<< HEAD
+=======
+    @Test
+    void testSafety_NonCylindricalAllowed() {
+
+        List<GoodsBogie> list = Arrays.asList(
+                new GoodsBogie("Rectangular", "Coal"),
+                new GoodsBogie("Open", "Grain")
+        );
+
+        boolean result = list.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") ||
+                                b.cargo.equals("Petroleum")
+                );
+
+        assertTrue(result);
+    }
+
+    @Test
+    void testSafety_MixedWithViolation() {
+
+        List<GoodsBogie> list = Arrays.asList(
+                new GoodsBogie("Cylindrical", "Petroleum"),
+                new GoodsBogie("Cylindrical", "Coal") // invalid
+        );
+
+        boolean result = list.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") ||
+                                b.cargo.equals("Petroleum")
+                );
+
+        assertFalse(result);
+    }
+
+    @Test
+    void testSafety_EmptyList() {
+
+        List<GoodsBogie> list = new ArrayList<>();
+
+        boolean result = list.stream()
+                .allMatch(b ->
+                        !b.type.equals("Cylindrical") ||
+                                b.cargo.equals("Petroleum")
+                );
+
+        assertTrue(result); // empty = safe
+    }
+
+
+ develop
+>>>>>>> cfe9f40d2bb360f7c0f580360fe5cdf4237da333
     // ================= UC13 =================
     static class BogieUC13 {
         int capacity;
@@ -182,10 +235,15 @@ class TrainConsistManagementAppTest {
         return false;
     }
 
+<<<<<<< HEAD
     @Test
     void testUC18_Found() {
         assertTrue(search(new String[]{"BG101","BG309"}, "BG309"));
     }
+=======
+main
+
+>>>>>>> cfe9f40d2bb360f7c0f580360fe5cdf4237da333
 
     @Test
     void testUC18_NotFound() {
