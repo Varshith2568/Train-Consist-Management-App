@@ -190,6 +190,117 @@ class TrainConsistManagementAppTest {
     }
 
 
+ develop
+    // ================= UC13 =================
+// Performance Comparison (Loops vs Streams)
+
+    class Bogie {
+        String type;
+        int capacity;
+
+        Bogie(String type, int capacity) {
+            this.type = type;
+            this.capacity = capacity;
+        }
+    }
+
+    @Test
+    void testLoopFilteringLogic() {
+
+        List<Bogie> list = Arrays.asList(
+                new Bogie("A", 50),
+                new Bogie("B", 70),
+                new Bogie("C", 90)
+        );
+
+        List<Bogie> result = new ArrayList<>();
+
+        for (Bogie b : list) {
+            if (b.capacity > 60) {
+                result.add(b);
+            }
+        }
+
+        // Only 70 and 90 should be included
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void testStreamFilteringLogic() {
+
+        List<Bogie> list = Arrays.asList(
+                new Bogie("A", 50),
+                new Bogie("B", 70),
+                new Bogie("C", 90)
+        );
+
+        List<Bogie> result = list.stream()
+                .filter(b -> b.capacity > 60)
+                .toList();
+
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void testLoopAndStreamResultsMatch() {
+
+        List<Bogie> list = Arrays.asList(
+                new Bogie("A", 50),
+                new Bogie("B", 70),
+                new Bogie("C", 90)
+        );
+
+        List<Bogie> loopResult = new ArrayList<>();
+        for (Bogie b : list) {
+            if (b.capacity > 60) {
+                loopResult.add(b);
+            }
+        }
+
+        List<Bogie> streamResult = list.stream()
+                .filter(b -> b.capacity > 60)
+                .toList();
+
+        // Both results should be same size
+        assertEquals(loopResult.size(), streamResult.size());
+    }
+
+    @Test
+    void testExecutionTimeMeasurement() {
+
+        long start = System.nanoTime();
+
+        for (int i = 0; i < 1000; i++) {
+            // dummy operation
+        }
+
+        long end = System.nanoTime();
+
+        long elapsed = end - start;
+
+        assertTrue(elapsed > 0);
+    }
+
+    @Test
+    void testLargeDatasetProcessing() {
+
+        List<Bogie> list = new ArrayList<>();
+
+        for (int i = 0; i < 10000; i++) {
+            list.add(new Bogie("X", i % 100));
+        }
+
+        List<Bogie> result = list.stream()
+                .filter(b -> b.capacity > 60)
+                .toList();
+
+        // Should return some filtered data
+        assertFalse(result.isEmpty());
+    }
+
+
+
+main
 
 
 }
