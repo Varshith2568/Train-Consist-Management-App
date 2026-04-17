@@ -342,8 +342,6 @@ feature/UC19
         assertArrayEquals(new int[]{24,56,60,70,72},
                 bubbleSort(new int[]{24,56,60,70,72}));
     }
-
- feature/UC17
     // ================= UC17 =================
     @Test
     void testUC17_Sorting() {
@@ -355,12 +353,12 @@ feature/UC19
     // ================= UC18 =================
     boolean search(String[] arr, String key) {
         for (String s : arr) if (s.equals(key)) return true;
-main
+
         return false;
     }
 
     @Test
- feature/UC19
+
     void testUC19_BogieFound() {
         assertTrue(binarySearch(
                 new String[]{"BG101","BG205","BG309","BG412","BG550"},
@@ -373,6 +371,59 @@ main
                 new String[]{"BG101","BG205","BG309","BG412","BG550"},
                 "BG999"));
     }
+ 
+
+
+// ================= UC20 =================
+
+    boolean searchWithValidation(String[] arr, String key) {
+
+        if (arr.length == 0) {
+            throw new IllegalStateException("No bogies available in train. Cannot perform search.");
+        }
+
+        for (String s : arr) {
+            if (s.equals(key)) return true;
+        }
+        return false;
+    }
+
+    @Test
+    void testSearch_ThrowsExceptionWhenEmpty() {
+        assertThrows(IllegalStateException.class, () -> {
+            searchWithValidation(new String[]{}, "BG101");
+        });
+    }
+
+    @Test
+    void testSearch_AllowsSearchWhenDataExists() {
+        assertDoesNotThrow(() -> {
+            searchWithValidation(new String[]{"BG101","BG205"}, "BG101");
+        });
+    }
+
+    @Test
+    void testSearch_BogieFoundAfterValidation() {
+        assertTrue(searchWithValidation(
+                new String[]{"BG101","BG205","BG309"}, "BG205"));
+    }
+
+    @Test
+    void testSearch_BogieNotFoundAfterValidation() {
+        assertFalse(searchWithValidation(
+                new String[]{"BG101","BG205","BG309"}, "BG999"));
+    }
+
+    @Test
+    void testSearch_SingleElementValidCase() {
+        assertTrue(searchWithValidation(
+                new String[]{"BG101"}, "BG101"));
+    }
+
+}
+
+
+
 }
 
     void testUC18_Found() {
@@ -383,14 +434,10 @@ main
     void testUC18_NotFound() {
         assertFalse(search(new String[]{"BG101","BG309"}, "BG999"));
     }
- feature/UC18
+
 }
 
-main
- main
- main
+
 
 
 }
- main
- main

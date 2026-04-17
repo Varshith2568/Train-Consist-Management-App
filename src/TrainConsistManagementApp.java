@@ -25,6 +25,15 @@ public class TrainConsistManagementApp {
         sortBogieNames();
         linearSearchBogie();
         binarySearchBogie();
+ feature/UC20
+
+       
+        try {
+            searchWithValidation();
+        } catch (IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
         initializeTrain();              // UC1
         roomInitialization();           // UC2
         trackUniqueBogies();            // UC3
@@ -61,6 +70,7 @@ feature/UC17
 main
  main
 main
+ main
  main
  main
     }
@@ -100,8 +110,8 @@ main
         train.add("Engine");
         train.add("Sleeper");
         train.add("AC");
-
         train.add(1, "Pantry");
+
         System.out.println(train + "\n");
     }
 
@@ -143,6 +153,7 @@ main
         List<String> list = Arrays.asList("Sleeper", "AC", "Sleeper");
         Map<String, Long> map = list.stream()
                 .collect(Collectors.groupingBy(x -> x, Collectors.counting()));
+
         System.out.println(map + "\n");
     }
 
@@ -190,12 +201,8 @@ main
 
     // ===== UC14 =====
     public static void handleInvalidCapacity() {
-        class InvalidCapacityException extends Exception {
-            InvalidCapacityException(String m) { super(m); }
-        }
-
         try {
-            if (0 <= 0) throw new InvalidCapacityException("Invalid");
+            throw new Exception("Invalid");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -252,6 +259,20 @@ main
             else low = mid + 1;
         }
     }
+
+ feature/UC20
+    // ===== UC20 =====
+    public static void searchWithValidation() {
+
+        System.out.println("=====================================");
+        System.out.println("UC20 - Exception Handling During Search");
+        System.out.println("=====================================\n");
+
+        String[] bogieIds = {}; // empty
+
+        if (bogieIds.length == 0) {
+            throw new IllegalStateException("No bogies available in train. Cannot perform search.");
+        }
 
     // ===== UC14 =====
     public static void handleInvalidCapacity() {
@@ -439,6 +460,7 @@ main
         }
 
         System.out.println("\nUC18 search completed...\n");
+ main
     }
 }
 
