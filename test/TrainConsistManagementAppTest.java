@@ -190,6 +190,7 @@ class TrainConsistManagementAppTest {
     }
 
 
+ develop
     // ================= UC13 =================
 // Performance Comparison (Loops vs Streams)
 
@@ -412,6 +413,7 @@ class TrainConsistManagementAppTest {
         assertNull(g.cargo);
     }
 
+ feature/UC16
     // ================= UC16 =================
 // Bubble Sort
 
@@ -468,6 +470,7 @@ class TrainConsistManagementAppTest {
         assertArrayEquals(input, bubbleSort(input));
     }
 
+ feature/UC17
     // ================= UC17 =================
 // Arrays.sort()
 
@@ -525,6 +528,10 @@ class TrainConsistManagementAppTest {
 
         assertArrayEquals(new String[]{"Sleeper"}, input);
     }
+
+main
+ main
+ main
 
 
 }
